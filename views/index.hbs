@@ -1,0 +1,104 @@
+<h1>STS Loaner Tracker</h1>
+<img id="stsimage" src="https://sts.wustl.edu/files/2017/12/Banner-STS-front-window-fall-18ewgp4.jpg"
+    alt="WashU STS Banner" />
+<script>
+    let d = 0;
+</script>
+
+{{#if records}}
+<!--<div class="tabletitle">-->
+<!--    <h5><strong>Currently Loaned Loaners</strong></h5>  -->
+<!--</div>-->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col" colspan="8">Currently Loaned Loaners</th>
+        </tr>
+        <tr>
+            <th scope="col">Client Name</th>
+            <th scope="col">Ticket Number</th>
+            <th scope="col">Loaner ID</th>
+            <th scope="col">Checkout Date</th>
+            <th scope="col">Next Followup Date</th>
+            <th scope="col">Edit Record</th>
+            <th scope="col">Add/View Loaner Forms</th>
+            <th scope="col">Add/View Repair Proof</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each records}}
+        {{#if loanerUnlocked}}
+        <tr id="{{_id}}">
+            {{else}}
+        <tr class="table-danger" id="{{_id}}">
+            {{/if}}
+            <script>
+                d = "{{nextContactDate}}"
+                if (d !== "") {
+                    const nextContactDate = new Date(d)
+                    const curr = Date.now()
+                    if (curr >= nextContactDate) {
+                        const classes = $('#{{_id}}').attr('class')
+                        $('#{{_id}}').addClass('table-warning')
+                    }
+                }
+            </script>
+            <td><a href="/records/{{_id}}">{{name}}</a></td>
+            <td><a href="https://wustl.service-now.com/incident.do?sys_id={{ticketSysID}}">{{ticketID}}</a></td>
+            <td>{{loanerID}}</td>
+            <td>{{dateFormat openDate}}</td>
+            <td>{{dateFormat nextContactDate}}</td>
+            <td><a class="btn btn-primary" href="/records/{{_id}}/edit"><i class="bi-pencil-square"></i></a></td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-secondary" href="/file/form/add/{{_id}}"><i class="bi-file-arrow-up"></i></a>
+                    {{#if loanerForms}}
+                    <a class="btn btn-secondary" href="/file/form/get/{{_id}}"><i class="bi-eye"></i></a>
+                    {{/if}}
+                </div>
+            </td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-secondary" href="/file/proof/add/{{_id}}"><i class="bi-file-arrow-up"></i></a>
+                    {{#if proofRepair}}
+                    <a class="btn btn-secondary" href="/file/proof/get/{{_id}}"><i class="bi-eye"></i></a>
+                    {{/if}}
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<h3 id="table-head">There are no open loaner records! 🎉</h3>
+{{/if}}
+<div class="button-box">
+    <a class="btn btn-outline-primary" href="/records/create">Create a Record</a>
+    <a class="btn btn-outline-danger" href="/records/history">View Historical Data</a>
+</div>
+
+{{!-- searches ticket by ticker id --}}
+<form id="searchblock" action="/records/search" method="post" class="input-group">
+    <input name="TicketSearch" class="form-control" type="text" id="search-content"
+        placeholder="Search by Ticket Number (include INC)" value="">
+    <button type="submit" class="btn btn-sm btn-primary" id="search">Search</button>
+</form>
+
+<h5 id="howto">How to use the Loaner Tracker:</h5>
+<p>Welcome to the STS Loaner Tracker! When a client checks out a loaner laptop, click the "Create a new Record" button
+    to create a record for them.</p>
+<p>Click the link under the "Client Name" column to view detailed ticket information, and click the link under "Ticket
+    Number" to view the ticket in ServiceNow</p>
+<p>Make sure to upload the client's loaner forms and proof of repair forms when they send them in. If you upload a form
+    to a record that already has a form, the previous form will be overwritten</p>
+
+<p>After each contact with a client, make sure to change the "followup date" field by editing the ticket.</p>
+<p>When the client returns the laptop, edit the record and select "Close Record"</p>
+
+<h5>Key:</h5>
+<ul class="list-group">
+    <li class="list-group-item list-group-item-danger">The client's loaner has been locked</li>
+    <li class="list-group-item list-group-item-warning">It is past the current set followup date! Make sure to reach out
+        to the client and to change the next followup date.</li>
+    <li class="list-group-item list-group-item-light">Nothing to do!</li>
+</ul>

@@ -1,0 +1,8 @@
+<h1>Upload Loaner {{form}}</h1>
+<a id="returnbtn" class="btn btn-outline-primary" href="/">Return</a>
+<div class="container">
+  <form action="/file/{{form}}/add/{{id}}" method="post" enctype="multipart/form-data">
+    <input type="file" class="form-control-file" name="loaner_form" />
+    <input type="submit" value="Create" class="btn btn-primary" id="file-upload-btn">
+  </form>
+</div>

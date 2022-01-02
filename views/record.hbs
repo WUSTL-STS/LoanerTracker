@@ -1,0 +1,37 @@
+<h3>Record for {{name}}'s {{dateFormat openDate}} Laptop Loan:</h3>
+{{#if status}}
+<p>This record is open.</p>
+{{else}}
+<p>This record is closed and can no longer be edited</p>
+{{/if}}
+<div class="row">
+    <div class="col">
+      Name: {{name}}
+    </div>
+    <div class="col">
+      StudentID: {{studentID}}
+    </div>
+    <div class="col">
+        ServiceNow Record: {{ticketID}}
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+      Phone: {{phone}}
+    </div>
+    <div class="col">
+      Email: {{email}}
+    </div>
+</div>
+{{#if closeDate}}
+<p>This record was opened on {{dateFormat openDate}} and closed on {{dateFormat closeDate}}</p>
+{{else}}
+<p>This record was opened on {{dateFormat openDate}}</p>
+{{/if}}
+{{#if loanerForms}}
+<a class="btn btn-primary" href="/file/form/get/{{_id}}">Download Signed Loaner Forms</a>
+{{/if}}
+{{#if proofRepair}}
+<a class="btn btn-primary" href="/file/proof/get/{{_id}}">Download Proof of Repair</a>
+{{/if}}
+<a class="btn btn-outline-primary" href="/">Return</a>

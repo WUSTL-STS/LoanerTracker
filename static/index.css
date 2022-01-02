@@ -1,0 +1,69 @@
+.row{
+    padding-top: 10px;
+}
+
+.button-box {
+    justify-content: space-between;
+    display: flex;
+}
+
+.submit {
+    margin-top: 5px;
+}
+
+thead {
+    text-align: center;
+}
+
+#file-upload-btn {
+    margin-top: 10px;
+}
+
+#table-head {
+    text-align: center;
+}
+
+#sysid-info {
+    padding-top: 10px;
+}
+
+#howto {
+    margin-top: 20px;
+}
+
+.list-group {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#csvblock {
+    padding-top: 10px;
+}
+
+#searchblock {
+    padding-top: 30px;
+    padding-bottom: 10px;
+    float: right;
+}
+
+#stsimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#createguide {
+    padding-top: 10px;
+}
+
+.tabletitle {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 100px;
+}
+
+.input-group {
+    justify-content: center;
+}
