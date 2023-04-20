@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const multer = require('multer')
-const upload = multer({ dest: '/uploads' })
+const upload = multer({ dest: './uploads' })
 
 const Record = require('../models/Record')
 const GridFile = require('../models/GridFile')
@@ -11,7 +11,7 @@ const fs = require('fs')
 
 router.get('/:form/add/:id', (req, res) => {
     try {
-        params = {'form': req.params.form, 'id': req.params.id}
+        params = { 'form': req.params.form, 'id': req.params.id }
         res.render('addFile', params)
     } catch (err) {
         console.log(err)
@@ -32,19 +32,19 @@ router.post('/:form/add/:id', upload.single('loaner_form'), async (req, res, nxt
             fs.unlinkSync(file.path)
 
             const r = await Record.findById(req.params.id)
-        
-            if(req.params.form === "form"){
+
+            if (req.params.form === "form") {
                 if (r.loanerForms) {
                     GridFile.findByIdAndRemove(r.loanerForms)
                 }
                 r.loanerForms = gridFile
-            } else if (req.params.form === "proof"){
+            } else if (req.params.form === "proof") {
                 if (r.proofRepair) {
                     GridFile.findByIdAndRemove(r.proofRepair)
                 }
                 r.proofRepair = gridFile;
             }
-            
+
             await r.save();
             res.redirect('/')
         }
@@ -57,9 +57,9 @@ router.get('/:form/get/:id', async (req, res, nxt) => {
     try {
         const r = await Record.findById(req.params.id)
         let g;
-        if(req.params.form === "form"){
+        if (req.params.form === "form") {
             g = await GridFile.findById(r.loanerForms)
-        } else if (req.params.form === "proof"){
+        } else if (req.params.form === "proof") {
             g = await GridFile.findById(r.proofRepair)
         }
         if (g) {
