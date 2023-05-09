@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json())
 
+mongoose.set("strictQuery", false)
 const DBConnect = require('./config/db');
 DBConnect();
 const connection = mongoose.connection;
@@ -57,5 +58,9 @@ app.use('/export', require('./routes/export'))
 //Open port 8080
 const port = 8080;
 app.listen(port, () => {
-    console.log(`Server hosted on port ${port}`);
+    console.log(`Server hosted on port ${port} \n
+    http://localhost:${port}`);
+    if (process.env.NODE_ENV === 'production') {
+        console.log(`Server hosted on port ${port}`);
+    }
 });

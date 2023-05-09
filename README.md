@@ -1,4 +1,5 @@
 # STS Loaner Tracker
+
 This project was originally created for CSE330 at Washington University in St. Louis.
 Created by Jack Heuberger and Jack Zhai.
 
@@ -14,6 +15,12 @@ This app gives technicians a standardized workflow that integrates (as best it c
 2. Clone the repository and navigate to the directory
 3. Run `docker-compose up`
 4. Visit localhost:8080
+
+# For Development:
+
+1. Compose the Docker using: `docker-compose -f docker-compose.dev.yml up`
+2. In the root directory, run `npm run dev`
+3. Visit localhost:3000
 
 ### Features
 
