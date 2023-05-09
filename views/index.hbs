@@ -38,8 +38,8 @@
                     const nextContactDate = new Date(d)
                     const curr = Date.now()
                     if (curr >= nextContactDate) {
-                        const classes = $('#{{_id}}').attr('class')
-                        $('#{{_id}}').addClass('table-warning')
+                        const element = document.getElementById('{{_id}}');
+                        element.classList.add('table-warning');
                     }
                 }
             </script>
@@ -77,6 +77,10 @@
     <a class="btn btn-outline-danger" href="/records/history">View Historical Data</a>
 </div>
 
+<div>
+    <div></div>
+</div>
+
 {{!-- searches ticket by ticker id --}}
 <form id="searchblock" action="/records/search" method="post" class="input-group">
     <input name="TicketSearch" class="form-control" type="text" id="search-content"
@@ -100,5 +104,5 @@
     <li class="list-group-item list-group-item-danger">The client's loaner has been locked</li>
     <li class="list-group-item list-group-item-warning">It is past the current set followup date! Make sure to reach out
         to the client and to change the next followup date.</li>
-    <li class="list-group-item list-group-item-light">Nothing to do!</li>
+    <li class="list-group-item list-group-item-light">Nothing to do! indigo</li>
 </ul>

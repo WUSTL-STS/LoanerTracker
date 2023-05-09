@@ -4,7 +4,9 @@
   "description": "App to track loaner laptops for STS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js | npx browser-sync start --config bs-config.js --no-open"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,9 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.13",
     "multer": "^1.4.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.1",
+    "nodemon": "^2.0.22"
   }
 }
