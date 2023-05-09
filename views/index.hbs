@@ -38,8 +38,8 @@
                     const nextContactDate = new Date(d)
                     const curr = Date.now()
                     if (curr >= nextContactDate) {
-                        const classes = $('#{{_id}}').attr('class')
-                        $('#{{_id}}').addClass('table-warning')
+                        const element = document.getElementById('{{_id}}');
+                        element.classList.add('table-warning');
                     }
                 }
             </script>
@@ -75,6 +75,10 @@
 <div class="button-box">
     <a class="btn btn-outline-primary" href="/records/create">Create a Record</a>
     <a class="btn btn-outline-danger" href="/records/history">View Historical Data</a>
+</div>
+
+<div>
+    <div></div>
 </div>
 
 {{!-- searches ticket by ticker id --}}

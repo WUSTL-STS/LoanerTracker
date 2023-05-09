@@ -99,36 +99,34 @@
 
 
     <script>
-
         function checkValid(){
             let isValid = true;
-            $('input').each(function() {
-                if ( $(this).val() === "" && $(this).attr('id') != "OpenDate") {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach((input) => {
+                if (input.value === "" && input.id != "OpenDate") {
                     isValid = false;
                 }
             });
             return isValid
         }
 
-        $("#create-form-submit").click(() => {
+        const createFormSubmit = document.getElementById("create-form-submit")
+        createFormSubmit.addEventListener("click", () => {
             if(checkValid()) {
-                $("#create-form").submit()
+                document.getElementById("create-form").submit()
+            } else {
+                alert("Make sure to fill out all parts of the form!")
+            }
+            console.log("hello")
+        })
+
+        const closeFormSubmit = document.getElementById("close-form-submit")
+        closeFormSubmit.addEventListener("click", () => {
+            if(checkValid()) {
+                document.getElementById("close-form").submit()
             } else {
                 alert("Make sure to fill out all parts of the form!")
             }
         })
 
-        $("#close-form-submit").click(() => {
-            if(checkValid()) {
-                let c = confirm("WARNING: this will close the record and remove it from the active table.\n" +
-                    "Once this happens the record can no longer be edited. \n" +
-                    "Only do this once the client has returned their loaner laptop. \n" +
-                    "Any edits made on this page will not be saved.")
-                if (c) {
-                    $("#close-form").submit()
-                }
-            } else {
-                alert("Make sure to fill out all parts of the form!")
-            }
-        })
     </script>
