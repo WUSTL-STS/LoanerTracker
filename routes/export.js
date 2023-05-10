@@ -1,44 +1,37 @@
 const express = require('express');
 const router = express.Router();
-
+const { Parser } = require('@json2csv/plainjs');
 const Record = require('../models/Record')
-
-const { parse } = require('json2csv');
-const fields = ['name', 'email', 'phone', 'studentID', 'ticketID', 'loanerID', 'openDate', 'closeDate'];
-const opts = { fields };
 
 router.post('/', async (req, res) => {
     try {
-        let start = 0
-        let end = 0
-        if(req.body.StartDate === '' && req.body.EndDate === ''){
-            start = new Date("11/1/2021")
-            end = Date.now()
-        } else {
-            if(req.body.StartDate === ''){
-                res.redirect('/history')
-            } else {
-                start = new Date(req.body.StartDate)
-            }
-
-            if(req.body.EndDate === ''){
-                end = Date.now()
-            } else {
-                end = new Date(req.body.EndDate)
-            }
+        const fields = ['name', 'email', 'phone', 'studentID', 'ticketID', 
+                            'loanerID', 'openDate', 'closeDate']
+        const opts = { fields }
+        const parser = new Parser(opts)
+        if(req.body.startDate === '' && req.body.endDate === '') {
+            const r = await Record.find().sort({ closeDate: 'descending'}).lean()
+            const csv = parser.parse(r)
+            res.header('Content-Type', 'text/csv')
+            res.attachment("records.csv")
+            return res.send(csv)
         }
-        const r = await Record.find({
-            openDate: {
-                $gte: start,
-                $lte: end
+
+        const r = await Record.find(
+            {
+                openDate: {
+                    $gte: req.body.startDate,
+                    $lte: req.body.endDate
+                }
             }
-            }).lean()
-        const csv = parse(r, opts);
-        res.header('Content-Type', 'text/csv');
-        res.attachment("records.csv");
-        return res.send(csv);
-    } catch (err) {
-        console.log(err)
+        ).sort({ closeDate: 'descending'}).lean()
+        const csv = parser.parse(r)
+        res.header('Content-Type', 'text/csv')
+        res.attachment("records.csv")
+        return res.send(csv)
+    }
+    catch (err) {
+        console.error(err)
     }
 })
 
