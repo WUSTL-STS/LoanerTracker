@@ -1,3 +1,4 @@
+<div class="container">
 {{#if r}}
     <h1><strong>Editing {{r.name}}'s Loaner Record </strong></h1>
 {{else}}
@@ -88,50 +89,11 @@
         </div>
     </div>
 {{/if}}
+<button type="submit" class="btn btn-primary submit" id="create-form-submit">Save</button>
 </form>
-        <form action="/records/close/{{r._id}}" method="post" id="close-form"></form>
-        <div class="button-box">
-            <button type="button" class="btn btn-primary submit" id="create-form-submit">Save</button>
 {{#if r}}
-            <button type="button" class="btn btn-danger submit" id="close-form-submit">Close Record</button>
+        <form action="/records/close/{{r._id}}" method="post" id="close-form">
+            <button type="submit" class="btn btn-danger submit" id="close-form-submit">Close Record</button>
+        </form>        
 {{/if}}
-        </div>
-
-
-    <script>
-        function checkValid(){
-            let isValid = true;
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach((input) => {
-                if (input.value === "" && input.id != "OpenDate") {
-                    isValid = false;
-                }
-            });
-            return isValid
-        }
-
-        const createFormSubmit = document.getElementById("create-form-submit")
-        if (createFormSubmit) {
-            createFormSubmit.addEventListener("click", () => {
-                if(checkValid()) {
-                    document.getElementById("create-form").submit()
-                } else {
-                    alert("Make sure to fill out all parts of the form!")
-                }
-            })
-        }
-
-
-        const closeFormSubmit = document.getElementById("close-form-submit")
-        if (closeFormSubmit) {
-                closeFormSubmit.addEventListener("click", () => {
-                if(checkValid()) {
-                    document.getElementById("close-form").submit()
-                } else {
-                    alert("Make sure to fill out all parts of the form!")
-                }
-            })     
-        }
-
-
-    </script>
+</div>
