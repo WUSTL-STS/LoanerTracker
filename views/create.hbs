@@ -111,22 +111,27 @@
         }
 
         const createFormSubmit = document.getElementById("create-form-submit")
-        createFormSubmit.addEventListener("click", () => {
-            if(checkValid()) {
-                document.getElementById("create-form").submit()
-            } else {
-                alert("Make sure to fill out all parts of the form!")
-            }
-            console.log("hello")
-        })
+        if (createFormSubmit) {
+            createFormSubmit.addEventListener("click", () => {
+                if(checkValid()) {
+                    document.getElementById("create-form").submit()
+                } else {
+                    alert("Make sure to fill out all parts of the form!")
+                }
+            })
+        }
+
 
         const closeFormSubmit = document.getElementById("close-form-submit")
-        closeFormSubmit.addEventListener("click", () => {
-            if(checkValid()) {
-                document.getElementById("close-form").submit()
-            } else {
-                alert("Make sure to fill out all parts of the form!")
-            }
-        })
+        if (closeFormSubmit) {
+                closeFormSubmit.addEventListener("click", () => {
+                if(checkValid()) {
+                    document.getElementById("close-form").submit()
+                } else {
+                    alert("Make sure to fill out all parts of the form!")
+                }
+            })     
+        }
+
 
     </script>

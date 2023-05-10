@@ -8,7 +8,7 @@ router.get('/history', async (req,res) => {
         const r = await Record.find().sort({ closeDate: 'descending'}).lean()
         res.render('allRecords', {r})
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 })
 
