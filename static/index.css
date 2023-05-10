@@ -1,5 +1,20 @@
+body {
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .row{
     padding-top: 10px;
+}
+
+.washu-branding {
+    width: 100%;
+    background-color: #a51417;
+    height: 2.625rem;
+    overflow: hidden;
+}
+
+.washu-branding-footer {
+    background-color: #3d3d3d;
 }
 
 .button-box {

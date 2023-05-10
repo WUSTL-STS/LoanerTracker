@@ -1,15 +1,24 @@
-<h1>STS Loaner Tracker</h1>
-<img id="stsimage" src="https://sts.wustl.edu/files/2017/12/Banner-STS-front-window-fall-18ewgp4.jpg"
-    alt="WashU STS Banner" />
+<div class="washu-branding">
+    <div class="container h-100 d-flex flex-column justify-content-center">
+		    <img src="/static/washulogo.svg" width="321" height="28" alt="washu logo">
+		</div>
+</div>
+
+<div class="container">
+    <div class="d-flex flex-column justify-content-center m-2">
+        <h2 class="text-center">Loaner Laptop Tracker</h2>
+        <img id="stsimage" src="https://sts.wustl.edu/files/2017/12/Banner-STS-front-window-fall-18ewgp4.jpg"
+            alt="WashU STS Banner"/>
+    </div>
+
 <script>
     let d = 0;
 </script>
-
 {{#if records}}
 <!--<div class="tabletitle">-->
 <!--    <h5><strong>Currently Loaned Loaners</strong></h5>  -->
 <!--</div>-->
-<table class="table table-striped">
+    <table class="table table-striped">
     <thead>
         <tr>
             <th scope="col" colspan="8">Currently Loaned Loaners</th>
@@ -44,7 +53,7 @@
                 }
             </script>
             <td><a href="/records/{{_id}}">{{name}}</a></td>
-            <td><a href="https://wustl.service-now.com/incident.do?sys_id={{ticketSysID}}">{{ticketID}}</a></td>
+            <td><a target="_blank" href="https://wustl.service-now.com/incident.do?sys_id={{ticketSysID}}">{{ticketID}}</a></td>
             <td>{{loanerID}}</td>
             <td>{{dateFormat openDate}}</td>
             <td>{{dateFormat nextContactDate}}</td>
@@ -72,14 +81,7 @@
 {{else}}
 <h3 id="table-head">There are no open loaner records! 🎉</h3>
 {{/if}}
-<div class="button-box">
     <a class="btn btn-outline-primary" href="/records/create">Create a Record</a>
-    <a class="btn btn-outline-danger" href="/records/history">View Historical Data</a>
-</div>
-
-<div>
-    <div></div>
-</div>
 
 {{!-- searches ticket by ticker id --}}
 <form id="searchblock" action="/records/search" method="post" class="input-group">
@@ -106,20 +108,12 @@
         to the client and to change the next followup date.</li>
     <li class="list-group-item list-group-item-light">Nothing to do! indigo</li>
 </ul>
+</div>
 
-<footer class="bg-light py-3">
+<footer class="py-3 washu-branding-footer">
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-6">
-        <p>&copy; 2021 My Company, Inc.</p>
-      </div>
-      <div class="col-12 col-md-6 text-md-end">
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Terms of Use</a></li>
-          <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-          <li class="list-inline-item"><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
+        <p class="text-white">&copy; 2023 Washington University in St. Louis</p>
     </div>
   </div>
 </footer>
