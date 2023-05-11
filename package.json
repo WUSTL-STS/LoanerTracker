@@ -1,38 +1,38 @@
 {
-  "name": "stsloanertracker",
-  "version": "1.0.0",
-  "description": "App to track loaner laptops for STS",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js | npx browser-sync start --config bs-config.js --no-open"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cse330-fall-2021/creativeproject-485964-475411.git"
-  },
-  "author": "Jack Heuberger and Jack Zhai",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cse330-fall-2021/creativeproject-485964-475411/issues"
-  },
-  "homepage": "https://github.com/cse330-fall-2021/creativeproject-485964-475411#readme",
-  "dependencies": {
-    "@json2csv/plainjs": "^6.1.3",
-    "body-parser": "^1.19.0",
-    "bootstrap": "^5.1.3",
-    "bootstrap-icons": "^1.7.1",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-handlebars": "^6.0.1",
-    "gridfile": "^1.1.1",
-    "moment": "^2.29.1",
-    "mongoose": "^6.0.13",
-    "multer": "^1.4.3"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.29.1",
-    "nodemon": "^2.0.22"
-  }
+    "name": "stsloanertracker",
+    "version": "1.0.0",
+    "description": "App to track loaner laptops for STS",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js",
+        "dev": "docker-compose up -d mongo && nodemon index.js | npx browser-sync start --config bs-config.js --no-open"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cse330-fall-2021/creativeproject-485964-475411.git"
+    },
+    "author": "Jack Heuberger and Jack Zhai",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/cse330-fall-2021/creativeproject-485964-475411/issues"
+    },
+    "homepage": "https://github.com/cse330-fall-2021/creativeproject-485964-475411#readme",
+    "dependencies": {
+        "@json2csv/plainjs": "^6.1.3",
+        "body-parser": "^1.19.0",
+        "bootstrap": "^5.1.3",
+        "bootstrap-icons": "^1.7.1",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-handlebars": "^6.0.1",
+        "gridfile": "^1.1.1",
+        "moment": "^2.29.1",
+        "mongoose": "^6.0.13",
+        "multer": "^1.4.3"
+    },
+    "devDependencies": {
+        "browser-sync": "^2.29.1",
+        "nodemon": "^2.0.22"
+    }
 }
