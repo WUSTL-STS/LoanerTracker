@@ -34,9 +34,4 @@ This app gives technicians a standardized workflow that integrates (as best it c
 
 ### Todo
 
-- Style similar to WashU themes/vibes
-- Better directions
-- Only each laptop should only be loaned out once
-- Make a grid view of the loaner laptop cart
-- Validation for dates, emails, id etc... (but also allow to be empty if they do not know)
-- List view can search by/sort by any of the fields (also this for historical but not as important)
+See issues tab.
