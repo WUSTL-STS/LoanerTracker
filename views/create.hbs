@@ -10,7 +10,7 @@
     <li>Note that every field is required</li>
 </ul>
 {{#if r}}
-    <form action="/records/{{r._id}}/edit" id="create-form" method="post">
+    <form action="/records/{{r._id}}/edit" id="edit-form" method="post">
 {{else}}
     <form action="/records/create" id="create-form" method="post">
 {{/if}}
@@ -25,16 +25,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <label for="ClientID">Client Student ID:</label>
-            <input required type="number" class="form-control" id="ClientID"
-                   name="ClientID" value="{{r.studentID}}">
-        </div>
-        <div class="col">
-            <label for="ClientPhone">Client Phone Number:</label>
-            <input required type="number" class="form-control" id="ClientPhone"
-                   name="ClientPhone" value="{{r.phone}}">
-        </div>
         <div class="col">
             <label for="LoanerNum">Loaner Number:</label>
             <input required type="number" class="form-control" id="LoanerNum"
@@ -78,6 +68,19 @@
             </ul>
         </div>
     </div>
+    <div class="row">
+        <label>
+            <input type="checkbox">
+            I have filled out the loaner form.
+        </label>
+
+        <label>
+            <input type="checkbox">
+            I have attached proof of repair.
+        </label>
+
+    </div>
+
 {{#if r}}
     <div class="row">
         <div class="col">
@@ -97,3 +100,24 @@
         </form>        
 {{/if}}
 </div>
+
+<script>
+    document.getElementById("create-form").addEventListener("submit", e => {
+        e.preventDefault();
+        // get loaner number from form
+        const loanerNum = document.getElementById("LoanerNum").value;
+        // check if loaner number is already in use
+        fetch(`/records/loaner-available/${loanerNum}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data === null) {
+                    alert("Loaner number is not available!")
+                }
+                if (data.status === "loaned") {
+                    alert(`Loaner number ${loanerNum} is already in use!`);
+                } else {
+                    document.getElementById("create-form").submit();
+                }
+            })
+    })
+</script>

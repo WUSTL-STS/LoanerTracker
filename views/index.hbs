@@ -30,8 +30,6 @@
             <th scope="col">Checkout Date</th>
             <th scope="col">Next Followup Date</th>
             <th scope="col">Edit Record</th>
-            <th scope="col">Add/View Loaner Forms</th>
-            <th scope="col">Add/View Repair Proof</th>
         </tr>
     </thead>
     <tbody>
@@ -58,22 +56,6 @@
             <td>{{dateFormat openDate}}</td>
             <td>{{dateFormat nextContactDate}}</td>
             <td><a class="btn btn-primary" href="/records/{{_id}}/edit"><i class="bi-pencil-square"></i></a></td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a class="btn btn-secondary" href="/file/form/add/{{_id}}"><i class="bi-file-arrow-up"></i></a>
-                    {{#if loanerForms}}
-                    <a class="btn btn-secondary" href="/file/form/get/{{_id}}"><i class="bi-eye"></i></a>
-                    {{/if}}
-                </div>
-            </td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a class="btn btn-secondary" href="/file/proof/add/{{_id}}"><i class="bi-file-arrow-up"></i></a>
-                    {{#if proofRepair}}
-                    <a class="btn btn-secondary" href="/file/proof/get/{{_id}}"><i class="bi-eye"></i></a>
-                    {{/if}}
-                </div>
-            </td>
         </tr>
         {{/each}}
     </tbody>

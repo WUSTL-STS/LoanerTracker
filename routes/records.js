@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Record = require('../models/Record')
+const Loaner = require('../models/Loaner')
 
 router.get('/history', async (req,res) => {
     try {
@@ -16,12 +17,24 @@ router.get('/create', (req, res) => {
     res.render('create')
 })
 
+router.get('/loaner-available/:id', async (req, res) => {
+    try {
+        const loanerNumber = req.params.id
+        console.log(loanerNumber)
+        const l = await Loaner.findOne({ id: loanerNumber })
+        res.json(l)
+    } catch (err) {
+        console.error(err)
+    }
+})
+
 router.post('/create', async (req, res) => {
     try {
+        console.log(req.body)
         const newRecord = new Record()
         newRecord.name = req.body.ClientName
         newRecord.email = req.body.ClientEmail
-        newRecord.studentID = req.body.ClientID
+        // newRecord.studentID = req.body.ClientID
         newRecord.loanerID = req.body.LoanerNum
         newRecord.ticketID = req.body.TicketID
         newRecord.phone = req.body.ClientPhone
@@ -34,9 +47,13 @@ router.post('/create', async (req, res) => {
         }
 
         await newRecord.save()
+        // update loaner status
+        const loanerNum = req.body.LoanerNum
+        await Loaner.findOneAndUpdate({ id: loanerNum }, { status: 'loaned' })
+
         res.redirect('/')
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 })
 
