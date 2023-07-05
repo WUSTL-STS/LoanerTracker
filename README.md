@@ -18,9 +18,8 @@ This app gives technicians a standardized workflow that integrates (as best it c
 
 # For Development:
 
-1. Compose the Docker using: `docker-compose -f docker-compose.dev.yml up`
-2. In the root directory, run `npm run dev`
-3. Visit localhost:3000
+1. In the root directory, run `npm run dev`
+2. Visit localhost:3000
 
 ### Features
 

@@ -13,15 +13,15 @@ const RecordSchema = new mongoose.Schema({
         required: true
     },
 
-    phone: {
-        type: Number,
-        required: true
-    },
+    // phone: {
+    //     type: Number,
+    //     required: true
+    // },
 
-    studentID: {
-        type: Number,
-        required: true
-    },
+    // studentID: {
+    //     type: Number,
+    //     required: true
+    // },
 
     loanerID: {
         type: Number,
@@ -67,15 +67,27 @@ const RecordSchema = new mongoose.Schema({
         default: null
     },
 
+    // loanerForms: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'GridFile',
+    // },
+
+    // proofRepair: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'GridFile',
+    // }
+
     loanerForms: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'GridFile',
+        type: Boolean,
+        default: false,
     },
 
     proofRepair: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'GridFile',
+        type: Boolean,
+        default: false,
     }
+
+    
 })
 
 module.exports = mongoose.model('Record', RecordSchema)
