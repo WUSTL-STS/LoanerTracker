@@ -70,12 +70,12 @@
     </div>
     <div class="row">
         <label>
-            <input type="checkbox">
+            <input type="checkbox" name="loanerForm" {{r.loanerForm}}>
             I have filled out the loaner form.
         </label>
 
         <label>
-            <input type="checkbox">
+            <input type="checkbox" name="proofOfRepair" {{r.proofOfRepair}}>
             I have attached proof of repair.
         </label>
 
@@ -102,7 +102,8 @@
 </div>
 
 <script>
-    document.getElementById("create-form").addEventListener("submit", e => {
+    if (document.getElementById("create-form")) {
+        document.getElementById("create-form").addEventListener("submit", e => {
         e.preventDefault();
         // get loaner number from form
         const loanerNum = document.getElementById("LoanerNum").value;
@@ -120,4 +121,7 @@
                 }
             })
     })
+
+    }
+
 </script>

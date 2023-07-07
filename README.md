@@ -21,6 +21,8 @@ This app gives technicians a standardized workflow that integrates (as best it c
 1. In the root directory, run `npm run dev`
 2. Visit localhost:3000
 
+Note: if you want to see console.logs from server-side, run `docker-compose up -d mongo && nodemon index.js | tee >(npx browser-sync start --config ./config/bs-config.js --no-open)`
+
 ### Features
 
 - Table to view open laptop loans
