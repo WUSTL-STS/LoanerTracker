@@ -77,14 +77,14 @@ const RecordSchema = new mongoose.Schema({
     //     ref: 'GridFile',
     // }
 
-    loanerForms: {
-        type: Boolean,
-        default: false,
+    loanerForm: {
+        type: String,
+        default: "",
     },
 
-    proofRepair: {
-        type: Boolean,
-        default: false,
+    proofOfRepair: {
+        type: String,
+        default: "",
     }
 
     

@@ -45,6 +45,18 @@ router.post('/create', async (req, res) => {
         } else {
             newRecord.openDate = Date.now();
         }
+        
+        if (req.body.loanerForm) {
+            newRecord.loanerForm = "checked"
+        } else {
+            newRecord.loanerForm = ""
+        }
+
+        if (req.body.proofOfRepair) {
+            newRecord.proofOfRepair = "checked"
+        } else {
+            newRecord.proofOfRepair = ""
+        }
 
         await newRecord.save()
         // update loaner status
@@ -60,9 +72,12 @@ router.post('/create', async (req, res) => {
 router.post('/close/:id', async(req, res) => {
     try {
         let r = await Record.findById(req.params.id)
+        let l = await Loaner.findOne({ id: r.loanerID })
+        l.status = 'available'
         r.status = false;
         r.closeDate = Date.now()
         await r.save();
+        await l.save();
         res.redirect('/')
     } catch (err) {
         console.log(err)
@@ -121,6 +136,18 @@ router.post('/:id/edit', async (req, res) => {
             r.ticketSysID = req.body.TicketSysID
             r.loanerUnlocked = req.body.LoanerLock
             r.openDate = req.body.OpenDate
+
+            if (req.body.loanerForm) {
+                r.loanerForm = "checked"
+            } else {
+                r.loanerForm = ""
+            }
+
+            if (req.body.proofOfRepair) {
+                r.proofOfRepair = "checked"
+            } else {
+                r.proofOfRepair = ""
+            }
 
             await r.save()
             res.redirect('/')
