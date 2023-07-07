@@ -20,7 +20,7 @@ router.get('/create', (req, res) => {
 router.get('/loaner-available/:id', async (req, res) => {
     try {
         const loanerNumber = req.params.id
-        console.log(loanerNumber)
+        // console.log(loanerNumber)
         const l = await Loaner.findOne({ id: loanerNumber })
         res.json(l)
     } catch (err) {
@@ -30,7 +30,7 @@ router.get('/loaner-available/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const newRecord = new Record()
         newRecord.name = req.body.ClientName
         newRecord.email = req.body.ClientEmail
@@ -80,7 +80,7 @@ router.post('/close/:id', async(req, res) => {
         await l.save();
         res.redirect('/')
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 })
 
