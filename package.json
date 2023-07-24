@@ -6,7 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index.js",
-        "dev": "docker-compose up -d mongo && nodemon index.js | npx browser-sync start --config ./config/bs-config.js --no-open"
+        "dev": "nodemon index.js",
+        "db": "docker-compose up -d mongo",
+        "dev-db": "npm run db -d && npm run dev"
     },
     "repository": {
         "type": "git",

@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 
 const RecordSchema = new mongoose.Schema({
-
-    //Client contact info
     name: {
         type: String,
         required: true
@@ -13,23 +11,12 @@ const RecordSchema = new mongoose.Schema({
         required: true
     },
 
-    // phone: {
-    //     type: Number,
-    //     required: true
-    // },
-
-    // studentID: {
-    //     type: Number,
-    //     required: true
-    // },
-
     loanerID: {
         type: Number,
         required: true
     },
 
-    //Ticket and record metrics
-    ticketID: {
+    ticketINC: {
         type: String,
         required: true
     },
@@ -39,13 +26,12 @@ const RecordSchema = new mongoose.Schema({
         required: true
     },
 
-    status: {
+    isOpen: {
         type: Boolean,
-        default: true,
-        required: true
+        default: true
     },
 
-    loanerUnlocked: {
+    isUnlocked: {
         type: Boolean,
         default: true,
     },
@@ -57,7 +43,6 @@ const RecordSchema = new mongoose.Schema({
 
     closeDate: {
         type: Date,
-        required: false,
         default: null
     },
 
@@ -65,29 +50,7 @@ const RecordSchema = new mongoose.Schema({
         type: Date,
         required: false,
         default: null
-    },
-
-    // loanerForms: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'GridFile',
-    // },
-
-    // proofRepair: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'GridFile',
-    // }
-
-    loanerForm: {
-        type: String,
-        default: "",
-    },
-
-    proofOfRepair: {
-        type: String,
-        default: "",
     }
-
-    
 })
 
 module.exports = mongoose.model('Record', RecordSchema)

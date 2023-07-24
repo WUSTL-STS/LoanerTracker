@@ -5,9 +5,14 @@ const LoanerSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    status: {
-        // available or loaned (is a string in case we want other statuses)
+    isLoaned: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    OS: {
         type: String,
+        enum: ['WINDOWS', 'MACOS'],
         required: true
     }
 })

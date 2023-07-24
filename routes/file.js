@@ -5,7 +5,6 @@ const multer = require('multer')
 const upload = multer({ dest: './uploads' })
 
 const Record = require('../models/Record')
-const GridFile = require('../models/GridFile')
 
 const fs = require('fs')
 

@@ -5,7 +5,7 @@ const Record = require('../models/Record')
 
 router.post('/', async (req, res) => {
     try {
-        const fields = ['name', 'email', 'phone', 'studentID', 'ticketID', 
+        const fields = ['name', 'email', 'phone', 'studentID', 'ticketINC', 
                             'loanerID', 'openDate', 'closeDate']
         const opts = { fields }
         const parser = new Parser(opts)

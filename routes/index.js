@@ -5,7 +5,7 @@ const Record = require('../models/Record')
 
 router.get('/', async (req, res) => {
     try {
-        let records = await Record.find({ 'status': 'true' }).sort({ nextContactDate: 'ascending' }).lean()
+        let records = await Record.find({ 'isOpen': 'true' }).sort({ nextContactDate: 'ascending' }).lean()
         res.render('index', {
             records
         })
