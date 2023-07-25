@@ -1,17 +1,17 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
 const Record = require('../models/Record')
 
 router.get('/', async (req, res) => {
-    try {
-        let records = await Record.find({ 'isOpen': 'true' }).sort({ nextContactDate: 'ascending' }).lean()
-        res.render('index', {
-            records
-        })
-    } catch (err) {
-        console.log(err)
-    }
-});
+  try {
+    const records = await Record.find({ isOpen: 'true' }).sort({ nextContactDate: 'ascending' }).lean()
+    res.render('index', {
+      records
+    })
+  } catch (err) {
+    console.log(err)
+  }
+})
 
 module.exports = router

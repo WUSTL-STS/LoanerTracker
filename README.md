@@ -16,7 +16,7 @@ This app gives technicians a standardized workflow that integrates (as best it c
 3. Run `docker-compose up`
 4. Visit localhost:8080
 
-# For Development:
+# For Development
 
 1. In the root directory, run `npm run dev`
 2. Visit localhost:3000

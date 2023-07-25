@@ -1,28 +1,29 @@
+---
 version: "3.9"
 volumes:
-    database:
+  database:
 services:
-    app:
-        build:
-            context: ./
-            dockerfile: Dockerfile
-        environment:
-            NODE_ENV: production
-        ports: 
-            - "8080:8080"
-        container_name: loanertracker
-        networks:
-            - my-network
-    mongo:
-        image: mongo
-        ports:
-            - "27017:27017"
-        container_name: db
-        volumes:
-            - database:/data/db
-        networks:
-            - my-network
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - "8080:8080"
+    container_name: loanertracker
+    networks:
+      - my-network
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: db
+    volumes:
+      - database:/data/db
+    networks:
+      - my-network
 
 networks:
-    my-network:
-        driver: bridge
+  my-network:
+    driver: bridge
