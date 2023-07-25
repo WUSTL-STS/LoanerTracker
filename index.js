@@ -42,10 +42,11 @@ const hbs = exphbs.create({
             }
             return "-"
         },
-        prefillFormat(date) {
-            if(date) {
-                return moment(date).format("YYYY-MM-DD")
-            }
+        checkoutFormat(date) {
+            return moment(date ? date : Date.now()).format("YYYY-MM-DD")
+        },
+        followUpFormat(date) {
+            return date ? moment(date).format("YYYY-MM-DD") : '-'
         }
     }
 });
@@ -56,10 +57,8 @@ app.set("views", './views');
 app.use('/', require('./routes/index'))
 app.use('/loaners', require('./routes/loaners'))
 app.use('/records', require('./routes/records'))
-// app.use('/file', require('./routes/file'))
 app.use('/export', require('./routes/export'))
 
-//Open port 8080
 const port = 8080;
 app.listen(port, () => {
     console.log(`Server hosted on port ${port} -- http://localhost:${port}`);

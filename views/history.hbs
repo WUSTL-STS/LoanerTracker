@@ -1,6 +1,6 @@
 <h1>All Laptop Loan Records</h1>
 <a class="btn btn-outline-primary" href="/">Return</a>
-{{#if r}}
+{{#if records}}
 <form id="csvblock" action="/export" method="post">
     Export records created in this time range to CSV (leaving blank exports every record):
     <br />
@@ -19,36 +19,20 @@
         </tr>
         <tr>
             <th scope="col">Client Name</th>
-            <th scope="col">Client ID</th>
             <th scope="col">Ticket Number</th>
             <th scope="col">Loaner ID</th>
             <th scope="col">Open Date</th>
             <th scope="col">Close Date</th>
-            <th scope="col">View Loaner Forms</th>
-            <th scope="col">View Repair Proof</th>
         </tr>
     </thead>
     <tbody>
-        {{#each r}}
+        {{#each records}}
         <tr>
             <td><a href="/records/{{_id}}">{{name}}</a></td>
-            <td>{{studentID}}</td>
             <td><a href="https://wustl.service-now.com/incident.do?sys_id={{ticketSysID}}">{{ticketINC}}</a></td>
             <td>{{loanerID}}</td>
             <td>{{dateFormat openDate}}</td>
             <td>{{dateFormat closeDate}}</td>
-            <td>{{#if loanerForms}}
-                <a class="btn btn-secondary" href="/file/form/get/{{_id}}"><i class="bi-eye"></i></a>
-                {{else}}
-                No forms uploaded
-                {{/if}}
-            </td>
-            <td>{{#if proofRepair}}
-                <a class="btn btn-secondary" href="/file/proof/get/{{_id}}"><i class="bi-eye"></i></a>
-                {{else}}
-                No forms uploaded
-                {{/if}}
-            </td>
         </tr>
         {{/each}}
     </tbody>

@@ -1,23 +1,16 @@
-<div class="washu-branding">
-    <div class="container h-100 d-flex flex-column justify-content-center">
-		    <img src="/static/washulogo.svg" width="321" height="28" alt="washu logo">
-		</div>
-</div>
-
 <div class="container">
     <div class="d-flex flex-column justify-content-center m-2">
         <h2 class="text-center">Loaner Laptop Tracker</h2>
         <img id="stsimage" src="https://sts.wustl.edu/files/2017/12/Banner-STS-front-window-fall-18ewgp4.jpg"
-            alt="WashU STS Banner"/>
+             alt="WashU STS Banner"/>
     </div>
+</div>
 <script>
-    let d = 0;
+    let contactDate = 0;
 </script>
+
 {{#if records}}
-<!--<div class="tabletitle">-->
-<!--    <h5><strong>Currently Loaned Loaners</strong></h5>  -->
-<!--</div>-->
-    <table class="table table-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th scope="col" colspan="8">Currently Loaned Loaners</th>
@@ -33,15 +26,15 @@
     </thead>
     <tbody>
         {{#each records}}
-        {{#if loanerUnlocked}}
+        {{#if isUnlocked}}
         <tr id="{{_id}}">
-            {{else}}
+        {{else}}
         <tr class="table-danger" id="{{_id}}">
-            {{/if}}
+        {{/if}}
             <script>
-                d = "{{nextContactDate}}"
-                if (d !== "") {
-                    const nextContactDate = new Date(d)
+                contactDate = "{{nextContactDate}}"
+                if (contactDate !== "") {
+                    const nextContactDate = new Date(contactDate)
                     const curr = Date.now()
                     if (curr >= nextContactDate) {
                         const element = document.getElementById('{{_id}}');

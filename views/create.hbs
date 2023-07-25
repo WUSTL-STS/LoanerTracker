@@ -11,99 +11,102 @@
     </ul>
     {{#if record}}
     <form action="/records/{{record._id}}/edit" id="edit-form" method="post">
-        {{else}}
-        <form action="/records/create" id="create-form" method="post">
-            {{/if}}
-            <div class="row">
-                <div class="col">
-                    <label for="ClientName">Client Name:</label>
-                    <input required type="text" class="form-control" id="ClientName" name="ClientName"
-                        value="{{record.name}}">
-                </div>
-                <div class="col">
-                    <label for="ClientEmail">Client Email:</label>
-                    <input required type="email" class="form-control" id="ClientEmail" name="ClientEmail"
-                        value="{{record.email}}">
-                </div>
+    {{else}}
+    <form action="/records/create" id="create-form" method="post">
+    {{/if}}
+        <div class="row">
+            <div class="col">
+                <label for="ClientName">Client Name:</label>
+                <input required type="text" class="form-control" id="ClientName" name="ClientName"
+                    value="{{record.name}}">
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="LoanerSelect">Loaner Number:</label>
-                    <select name="LoanerSelect" class="form-control">
-                        {{#each available}}
-                        <option value="{{id}}">{{id}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="TicketID">Incident Number:</label>
-                    <input required type="text" class="form-control" id="TicketID" placeholder="Include INC"
-                        name="TicketID" value="{{record.ticketINC}}">
-                </div>
+            <div class="col">
+                <label for="ClientEmail">Client Email:</label>
+                <input required type="email" class="form-control" id="ClientEmail" name="ClientEmail"
+                    value="{{record.email}}">
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="TicketSysID">Ticket System ID:</label>
-                    <input required type="text" class="form-control" id="TicketSysID" name="TicketSysID"
-                        value="{{record.ticketSysID}}">
-                    <ul>
-                        <li>Input the ticket's SysID from its URL making sure not to include anything else.
-                            Here's an example (copy the bold part)
-                        </li>
-                        <li>https://wustl.service-now.com/incident.do?sys_id=<strong>71d01a7f1b40059062fdc9192a4bcb9a</strong>&(...)
-                        </li>
-                    </ul>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="LoanerSelect">Loaner Number:</label>
+                <select name="LoanerSelect" class="form-control">
+                    {{#if record}}
+                    <option value="{{record.loanerID}}" selected>{{record.loanerID}}</option>
+                    {{/if}}
+                    {{#each available}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/each}}
+                </select>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="OpenDate">Loaner Checkout Date (leave blank for today):</label>
-                    <input type="date" class="form-control" id="OpenDate" name="OpenDate"
-                        value="{{prefillFormat r.openDate}}">
-                </div>
-                <div class="col">
-                    <label for="NextContact">Next Followup Date:</label>
-                    <input required type="date" class="form-control" id="NextContact" name="NextContact"
-                        value="{{prefillFormat r.nextContactDate}}">
+            <div class="col">
+                <label for="TicketID">Incident Number:</label>
+                <input required type="text" class="form-control" id="TicketID" placeholder="Include INC"
+                    name="TicketID" value="{{record.ticketINC}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="TicketSysID">Ticket Link:</label>
+                {{#if record}}
+                <input required type="text" class="form-control" id="TicketSysID" name="TicketSysID"
+                    value="https://wustl.service-now.com/incident.do?sys_id={{record.ticketSysID}}">
+                {{else}}
+                <input required type="text" class="form-control" id="TicketSysID" name="TicketSysID">
+                {{/if}}
+                <ul>
+                    <li>Give the full (long) link to the ServiceNow ticket for this loan.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="OpenDate">Loaner Checkout Date:</label>
+                <input type="date" class="form-control" id="OpenDate" name="OpenDate"
+                    value="{{checkoutFormat record.openDate}}">
+            </div>
+            <div class="col">
+                <label for="NextContact">Next Followup Date:</label>
+                <input required type="date" class="form-control" id="NextContact" name="NextContact"
+                    value="{{followUpFormat record.nextContactDate}}">
 
-                    <ul>
-                        <li>Type in the date for when we should next follow up with the client about proof of repair,
-                            their
-                            repair status, etc
-                        </li>
-                        <li>This might be tomorrow, a week from now, or longer!</li>
-                    </ul>
-                </div>
+                <ul>
+                    <li>Type in the date for when we should next follow up with the client about proof of repair,
+                        their
+                        repair status, etc
+                    </li>
+                    <li>This might be tomorrow, a week from now, or longer!</li>
+                </ul>
             </div>
-            <div class="row">
-                <label>
-                    <input type="checkbox" name="loanerForm" {{record.loanerForm}}>
-                    I have filled out the loaner form.
-                </label>
+        </div>
+        <div class="row">
+            <label>
+                <input type="checkbox" name="loanerForm">
+                I have filled out the loaner form and attached it to the ticket.
+            </label>
 
-                <label>
-                    <input type="checkbox" name="proofOfRepair" {{record.proofOfRepair}}>
-                    I have attached proof of repair.
-                </label>
+            <label>
+                <input type="checkbox" name="proofOfRepair" {{record.proofOfRepair}}>
+                I have attached proof of repair to the ticket, or described the exception being granted by a L2 or FTE.
+            </label>
 
-            </div>
+        </div>
 
-            {{#if record}}
-            <div class="row">
-                <div class="col">
-                    <label for="LoanerLock">Loaner Lock Status. Leave blank to keep the same:</label>
-                    <select name="LoanerLock" id="LoanerLock" class="form-select">
-                        <option value="true">Unlocked</option>
-                        <option value="false">Lock Loaner</option>
-                    </select>
-                </div>
-            </div>
-            {{/if}}
-            <button type="submit" class="btn btn-primary submit" id="create-form-submit">Save</button>
-        </form>
         {{#if record}}
-        <form action="/records/close/{{record._id}}" method="post" id="close-form">
-            <button type="submit" class="btn btn-danger submit" id="close-form-submit">Close Record</button>
-        </form>
+        <div class="row">
+            <div class="col">
+                <label for="LoanerLock">Loaner Lock Status. Leave blank to keep the same:</label>
+                <select name="LoanerLock" id="LoanerLock" class="form-select">
+                    <option value="true">Unlocked</option>
+                    <option value="false">Lock Loaner</option>
+                </select>
+            </div>
+        </div>
         {{/if}}
+        <button type="submit" class="btn btn-primary submit" id="create-form-submit">Save</button>
+    </form>
+    {{#if record}}
+    <form action="/records/close/{{record._id}}" method="post" id="close-form">
+        <button type="submit" class="btn btn-danger submit" id="close-form-submit">Close Record</button>
+    </form>
+    {{/if}}
 </div>

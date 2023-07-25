@@ -7,7 +7,7 @@ const Loaner = require('../models/Loaner')
 router.get('/history', async (req,res) => {
     try {
         const records = await Record.find().sort({ closeDate: 'descending'}).lean()
-        res.render('allRecords', {records})
+        res.render('history', {records: records})
     } catch (err) {
         console.error(err)
     }
@@ -15,18 +15,8 @@ router.get('/history', async (req,res) => {
 
 router.get('/create', async (req, res) => {
     try {
-        const records = await Loaner.find({ isLoaned: true }).lean()
-        res.render('create', {available: records})
-    } catch (err) {
-        console.error(err)
-    }
-})
-
-router.get('/loaner-available/:id', async (req, res) => {
-    try {
-        const loanerNumber = req.params.id
-        const l = await Loaner.findOne({ id: loanerNumber })
-        res.json(l)
+        const loaners = await Loaner.find({ isLoaned: false }).lean({virtuals: true})
+        res.render('create', {available: loaners})
     } catch (err) {
         console.error(err)
     }
@@ -34,7 +24,6 @@ router.get('/loaner-available/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
     try {
-        // Check to see if the loaner is available
         const check = await Loaner.findOne({ id: req.body.LoanerSelect })
         if (check.isLoaned) {
             throw "Loaner is already loaned out"
@@ -45,11 +34,7 @@ router.post('/create', async (req, res) => {
         newRecord.email = req.body.ClientEmail
         newRecord.loanerID = req.body.LoanerSelect
         newRecord.ticketINC = req.body.TicketID
-        newRecord.ticketSysID = ((url) => {
-            const urlObj = new URL(url);
-            const params = new URLSearchParams(urlObj.search);
-            return params.get("sys_id");
-        })(req.body.TicketSysID)
+        newRecord.ticketSysID = parseSysId(req.body.TicketSysID)
         if(req.body.OpenDate){
             newRecord.openDate = new Date(req.body.OpenDate)
         } else {
@@ -61,98 +46,93 @@ router.post('/create', async (req, res) => {
 
         res.redirect('/')
     } catch (err) {
-        console.error(err);
+        console.error(err)
         res.render('error/500')
     }
 })
 
 router.post('/close/:id', async(req, res) => {
     try {
-        let r = await Record.findById(req.params.id)
-        let l = await Loaner.findOne({ id: r.loanerID })
-        l.status = 'available'
-        r.status = false;
-        r.closeDate = Date.now()
-        await r.save();
-        await l.save();
+        let record = await Record.findById(req.params.id)
+        let loaner = await Loaner.findOne({ id: record.loanerID })
+        loaner.isLoaned = false
+        record.isOpen = false
+        record.closeDate = Date.now()
+        await record.save();
+        await loaner.save();
         res.redirect('/')
     } catch (err) {
         console.error(err)
+        res.render('error/500')
     }
 })
 
 //searches by the ticket number via post request
 router.post('/search', async (req, res) => {
+    const ticket = req.body.TicketSearch
+    if(ticket.replace(/ /g, '') === ''){
+        res.redirect('/')
+    }
+
     try {
-        const ticket = req.body.TicketSearch
-        if(ticket.replace(/ /g, '') === ''){
-            console.log("found empty")
-            res.redirect('/')
-        }else{  
-            const r = await Record.findOne({ ticketINC : ticket })
-            if(r) {
-                res.redirect('/records/' + r._id)
-            } else {
-                res.render('error/500')
-            }
+        const r = await Record.findOne({ ticketINC : ticket })
+        if(r) {
+            res.redirect('/records/' + r._id)
+        } else {
+            res.render('error/500')
         }
     } catch (err) {
+        console.error(err)
         res.render('error/500')
     }
 })
 
 router.get('/:id', async (req, res) => {
     try {
-        const r = await Record.findById(req.params.id).lean()
-        res.render('record', r)
+        const record = await Record.findById(req.params.id).lean()
+        res.render('record', record)
     } catch (err) {
         console.log(err)
+        res.render('error/500')
     }
 })
 
 router.get('/:id/edit', async (req, res) => {
     try {
-        const r = await Record.findById(req.params.id).lean()
-        res.render('create', {r})
+        const available = await Loaner.find({ isLoaned: false }).lean({virtuals: true})
+        const record = await Record.findById(req.params.id).lean()
+        res.render('create', {record: record, available: available})
     } catch (err) {
         console.log(err)
+        res.render('error/500')
     }
 })
 
 router.post('/:id/edit', async (req, res) => {
     try {
-        let r = await Record.findById(req.params.id)
-        if(r){
-            r.name = req.body.ClientName
-            r.email = req.body.ClientEmail
-            r.studentID = req.body.ClientID
-            r.loanerID = req.body.LoanerNum
-            r.ticketINC = req.body.TicketID
-            r.phone = req.body.ClientPhone
-            r.nextContactDate = req.body.NextContact
-            r.ticketSysID = req.body.TicketSysID
-            r.loanerUnlocked = req.body.LoanerLock
-            r.openDate = req.body.OpenDate
+        let record = await Record.findById(req.params.id)
+        record.name = req.body.ClientName
+        record.email = req.body.ClientEmail
+        record.loanerID = req.body.LoanerSelect
+        record.ticketINC = req.body.TicketID
+        record.phone = req.body.ClientPhone
+        record.nextContactDate = req.body.NextContact
+        record.ticketSysID = parseSysId(req.body.TicketSysID)
+        record.isUnlocked = req.body.LoanerLock
+        record.openDate = req.body.OpenDate
 
-            if (req.body.loanerForm) {
-                r.loanerForm = "checked"
-            } else {
-                r.loanerForm = ""
-            }
-
-            if (req.body.proofOfRepair) {
-                r.proofOfRepair = "checked"
-            } else {
-                r.proofOfRepair = ""
-            }
-
-            await r.save()
-            res.redirect('/')
-        } else {
-            res.render('error/500')
-        }
+        await record.save()
+        res.redirect('/')
     } catch (err) {
         console.log(err)
+        res.render('error/500')
     }
 })
+
+function parseSysId(url) {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
+    return params.get("sys_id");
+}
+
 module.exports = router
