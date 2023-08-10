@@ -3,10 +3,9 @@ import mongoose from 'mongoose'
 import { create, engine } from 'express-handlebars'
 import bodyParser from 'body-parser'
 import dayjs from 'dayjs'
-import { join } from 'path'
+import path from 'path'
 import DBConnect from './config/db'
 import bootstrapDefaultLoaners from './scripts/defaultLoanerCreation'
-import { Engine } from 'express-handlebars/types'
 
 const app = express() // Create the express server
 mongoose.set('debug', false)
@@ -28,13 +27,14 @@ connection.once('open', () => {
 bootstrapDefaultLoaners()
 
 // Serve CSS from /public
-app.use('/js', express.static(join(__dirname, '/node_modules/bootstrap/dist/js'))) // redirect bootstrap JS
-app.use('/js', express.static(join(__dirname, '/node_modules/jquery/dist'))) // redirect JS jQuery
-app.use('/css', express.static(join(__dirname, '/node_modules/bootstrap/dist/css'))) // redirect CSS bootstrap
-app.use('/icons', express.static(join(__dirname, '/node_modules/bootstrap-icons')))
-app.use('/static', express.static(join(__dirname, '/static')))
+console.log(path.join(__dirname, '../node_modules/bootstrap/dist/js'))
+app.use('/js', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/js'))) // redirect bootstrap JS
+app.use('/js', express.static(path.join(__dirname, '../node_modules/jquery/dist'))) // redirect JS jQuery
+app.use('/css', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/css'))) // redirect CSS bootstrap
+app.use('/icons', express.static(path.join(__dirname, '../node_modules/bootstrap-icons')))
+app.use('/static', express.static(path.join(__dirname, '/static')))
 
-app.engine('hbs', engine({
+const handlebars = create({
     extname: '.hbs',
     helpers: {
         dateFormat(date: Date | undefined) {
@@ -50,9 +50,10 @@ app.engine('hbs', engine({
             return date ? dayjs(date).format('YYYY-MM-DD') : '-'
         }
     }
-}))
-app.set('view engine', 'handlebars')
-app.set('views', './views')
+})
+app.engine('hbs', handlebars.engine)
+app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, 'views'))
 
 app.use('/', require('./routes/index'))
 app.use('/loaners', require('./routes/loaners'))
