@@ -1,8 +1,8 @@
 import express from 'express'
-const router = express.Router()
 
 import Record from '../models/Record'
 import Loaner from '../models/Loaner'
+const router = express.Router()
 
 router.get('/history', async (_, res) => {
     try {
@@ -26,7 +26,7 @@ router.post('/create', async (req, res) => {
     try {
         const check = await Loaner.findOne({ id: req.body.LoanerSelect })
 
-        if (!check) {
+        if (check == null) {
             throw new Error('Validation error. Loaner not found for ID')
         }
 
@@ -43,7 +43,7 @@ router.post('/create', async (req, res) => {
         if (req.body.OpenDate) {
             newRecord.openDate = new Date(req.body.OpenDate)
         } else {
-            newRecord.openDate = new Date();
+            newRecord.openDate = new Date()
         }
 
         newRecord.nextContactDate = req.body.NextContact
@@ -59,12 +59,12 @@ router.post('/create', async (req, res) => {
 router.post('/close/:id', async (req, res) => {
     try {
         const record = await Record.findById(req.params.id)
-        if (!record) {
+        if (record == null) {
             throw new Error('Record not found')
         }
 
         const loaner = await Loaner.findOne({ id: record.loanerID })
-        if (!loaner) {
+        if (loaner == null) {
             throw new Error('Loaner associated to record not found')
         }
 
@@ -89,7 +89,7 @@ router.post('/search', async (req, res) => {
 
     try {
         const r = await Record.findOne({ $text: { $search: ticket } })
-        if (r) {
+        if (r != null) {
             res.redirect('/records/' + r._id)
         } else {
             res.render('error/500')
@@ -103,7 +103,7 @@ router.post('/search', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const record = await Record.findById(req.params.id).lean()
-        if (!record) {
+        if (record == null) {
             throw new Error('Record not found')
         }
         res.render('record', record)
@@ -127,7 +127,7 @@ router.get('/:id/edit', async (req, res) => {
 router.post('/:id/edit', async (req, res) => {
     try {
         const record = await Record.findById(req.params.id)
-        if (!record) {
+        if (record == null) {
             throw new Error('Record not found')
         }
         record.name = req.body.ClientName
@@ -154,4 +154,3 @@ function parseSysId(url: string): string | null {
 }
 
 module.exports = router
-
