@@ -11,7 +11,7 @@ const app = express() // Create the express server
 mongoose.set('debug', false)
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
-    extended: false
+  extended: false
 }))
 
 // parse application/json
@@ -21,7 +21,7 @@ mongoose.set('strictQuery', false)
 DBConnect()
 const connection = mongoose.connection
 connection.once('open', () => {
-    console.log('Connected to MongoDB')
+  console.log('Connected to MongoDB')
 })
 
 bootstrapDefaultLoaners()
@@ -35,21 +35,21 @@ app.use('/icons', express.static(path.join(__dirname, '../node_modules/bootstrap
 app.use('/static', express.static(path.join(__dirname, '/static')))
 
 const handlebars = create({
-    extname: '.hbs',
-    helpers: {
-        dateFormat(date: Date | undefined) {
-            if (date !== undefined) {
-                return dayjs(date).format('MM/DD')
-            }
-            return '-'
-        },
-        checkoutFormat(date: Date | undefined) {
-            return dayjs(date || Date.now()).format('YYYY-MM-DD')
-        },
-        followUpFormat(date: Date | undefined) {
-            return date ? dayjs(date).format('YYYY-MM-DD') : '-'
-        }
+  extname: '.hbs',
+  helpers: {
+    dateFormat (date: Date | undefined) {
+      if (date !== undefined) {
+        return dayjs(date).format('MM/DD')
+      }
+      return '-'
+    },
+    checkoutFormat (date: Date | undefined) {
+      return dayjs((date != null) || Date.now()).format('YYYY-MM-DD')
+    },
+    followUpFormat (date: Date | undefined) {
+      return (date != null) ? dayjs(date).format('YYYY-MM-DD') : '-'
     }
+  }
 })
 app.engine('hbs', handlebars.engine)
 app.set('view engine', 'hbs')
@@ -62,8 +62,8 @@ app.use('/export', require('./routes/export'))
 
 const port = 8080
 app.listen(port, () => {
-    console.log(`Server hosted on port ${port} -- http://localhost:${port}`)
-    if (process.env.NODE_ENV === 'production') {
-        console.log(`Server hosted on port ${port}`)
-    }
+  console.log(`Server hosted on port ${port} -- http://localhost:${port}`)
+  if (process.env.NODE_ENV === 'production') {
+    console.log(`Server hosted on port ${port}`)
+  }
 })
