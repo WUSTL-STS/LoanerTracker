@@ -1,5 +1,6 @@
 import express from 'express'
 import Record from '../models/Record'
+import { Parser } from '@json2csv/plainjs'
 
 const router = express.Router()
 
@@ -8,7 +9,7 @@ router.post('/', async (req, res) => {
         const fields = ['name', 'email', 'phone', 'studentID', 'ticketINC',
             'loanerID', 'openDate', 'closeDate']
         const opts = { fields }
-        const parser = new plainjs.Parser(opts)
+        const parser = new Parser(opts)
         if (req.body.startDate === '' && req.body.endDate === '') {
             const r = await Record.find().sort({ closeDate: 'descending' }).lean()
             const csv = parser.parse(r)

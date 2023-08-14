@@ -88,7 +88,7 @@ router.post('/search', async (req, res) => {
     }
 
     try {
-        const r = await Record.findOne({ ticketINC: ticket })
+        const r = await Record.findOne({ $text: { $search: ticket } })
         if (r) {
             res.redirect('/records/' + r._id)
         } else {
@@ -103,7 +103,10 @@ router.post('/search', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const record = await Record.findById(req.params.id).lean()
-        res.render('record', { record })
+        if (!record) {
+            throw new Error('Record not found')
+        }
+        res.render('record', record)
     } catch (err) {
         console.log(err)
         res.render('error/500')
@@ -151,3 +154,4 @@ function parseSysId(url: string): string | null {
 }
 
 module.exports = router
+

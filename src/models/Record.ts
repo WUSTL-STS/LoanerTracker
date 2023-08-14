@@ -1,6 +1,14 @@
-import { getModelForClass, prop } from '@typegoose/typegoose';
-import mongoose from 'mongoose'
+import { getModelForClass, index, modelOptions, plugin, prop } from '@typegoose/typegoose';
+import mongooseLeanVirtuals from 'mongoose-lean-virtuals';
 
+@index({ name: 'text', email: 'text', ticketINC: 'text' })
+@plugin(mongooseLeanVirtuals)
+@modelOptions({
+    schemaOptions: {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true }
+    }
+})
 class RecordClass {
     @prop({ type: String, required: true })
     public name!: string;
@@ -31,6 +39,10 @@ class RecordClass {
 
     @prop({ type: Date, default: null })
     public nextContactDate?: Date;
+
+    public get serviceNowURL(): string {
+        return `https://wustl.service-now.com/incident.do?sys_id=${this.ticketSysID}`
+    }
 }
 
 const Record = getModelForClass(RecordClass)
