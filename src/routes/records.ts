@@ -15,7 +15,7 @@ router.get('/history', async (_, res) => {
 
 router.get('/create', async (_, res) => {
     try {
-        const loaners = await Loaner.find({ isLoaned: false }).lean({ virtuals: true })
+        const loaners = await Loaner.find({ isLoaned: false }).sort({ id: 'asc' }).lean({ virtuals: true })
         res.render('create', { available: loaners })
     } catch (err) {
         console.error(err)
