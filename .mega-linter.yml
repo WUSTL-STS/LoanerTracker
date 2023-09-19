@@ -8,12 +8,12 @@ APPLY_FIXES: none # all, none, or list of linter keys
 DISABLE:
   - COPYPASTE # Uncomment to disable checks of excessive copy-pastes
   - SPELL # Uncomment to disable checks of spelling mistakes
-DISABLE_LINTERS:
-  - TYPESCRIPT_STANDARD
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
 EXCLUDED_DIRECTORIES:
   - megalinter-reports
   - node_modules
+TYPESCRIPT_DEFAULT_STYLE: standard
+FILTER_REGEX_EXCLUDE: '(package-lock\.json|pnpm-lock\.yaml)'
 
 # DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass

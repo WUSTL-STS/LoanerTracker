@@ -1,23 +1,23 @@
-import { getModelForClass, prop, plugin } from '@typegoose/typegoose'
-import mongooseLeanVirtuals from 'mongoose-lean-virtuals'
-import { OS } from './OS'
+import { getModelForClass, prop, plugin } from "@typegoose/typegoose";
+import mongooseLeanVirtuals from "mongoose-lean-virtuals";
+import { OS } from "./OS";
 
 @plugin(mongooseLeanVirtuals)
 class LoanerClass {
   @prop({ type: Number, required: true })
-  public id!: Number
+  public id!: number;
 
   @prop({ type: Boolean, required: true })
-  public isLoaned!: boolean
+  public isLoaned!: boolean;
 
   @prop({ type: String, enum: OS, required: true })
-  public OS!: OS
+  public OS!: OS;
 
-  public get name (): string {
-    return `${this.id} - ${this.OS}`
+  public get name(): string {
+    return `${this.id} - ${this.OS}`;
   }
 }
 
-const Loaner = getModelForClass(LoanerClass)
+const Loaner = getModelForClass(LoanerClass);
 
-export default Loaner
+export default Loaner;
