@@ -1,5 +1,5 @@
 FROM node:16
-
+USER loaner
 # Create app directory
 WORKDIR /usr/src/app
 

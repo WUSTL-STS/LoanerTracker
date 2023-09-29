@@ -43,7 +43,7 @@
                 }
             </script>
             <td><a href="/records/{{_id}}">{{name}}</a></td>
-            <td><a target="_blank" href="https://wustl.service-now.com/incident.do?sys_id={{ticketSysID}}">{{ticketINC}}</a></td>
+            <td><a target="_blank" href="{{serviceNowURL}}">{{ticketINC}}</a></td>
             <td>{{loanerID}}</td>
             <td>{{dateFormat openDate}}</td>
             <td>{{dateFormat nextContactDate}}</td>
@@ -61,7 +61,7 @@
 {{!-- searches ticket by ticker id --}}
 <form id="searchblock" action="/records/search" method="post" class="input-group">
     <input name="TicketSearch" class="form-control" type="text" id="search-content"
-        placeholder="Search by Ticket Number (include INC)" value="">
+        placeholder="Search for a ticket! Searches by name, email, or INC" value="">
     <button type="submit" class="btn btn-sm btn-primary" id="search">Search</button>
 </form>
 

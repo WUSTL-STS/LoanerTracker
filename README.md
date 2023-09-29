@@ -9,17 +9,17 @@ This application is meant to streamline the laptop loaning process at Student Te
 
 This app gives technicians a standardized workflow that integrates (as best it can) with ServiceNow, and gives an easy way to view what laptops have currently been lent out to students. It also can remind techs to reach out to clients if the client has not responded in a certain timeframe.
 
-# Running Locally
+# Deployment
 
 1. Have Docker and Docker-Compose installed
 2. Clone the repository and navigate to the directory
-3. Run `docker-compose up`
+3. Run `npm run dev-db`
 4. Visit localhost:8080
 
-# For Development:
+# For Development
 
-1. In the root directory, run `npm run dev`
-2. Visit localhost:3000
+1. In the root directory, run `npm run dev-db`
+2. Visit localhost:8080
 
 Note: if you want to see console.logs from server-side, run `docker-compose up -d mongo && nodemon index.js | tee >(npx browser-sync start --config ./config/bs-config.js --no-open)`
 

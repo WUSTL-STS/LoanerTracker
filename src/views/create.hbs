@@ -37,10 +37,13 @@
                         <option value="{{id}}">{{name}}</option>
                     {{/each}}
                 </select>
+                <ul>
+                    <li>Hint: Click the dropdown and type the loaner number! It should filter without you having to scroll.</li>
+                </ul>
             </div>
             <div class="col">
                 <label for="TicketID">Incident Number:</label>
-                <input required type="text" class="form-control" id="TicketID" placeholder="Include INC"
+                <input required type="text" class="form-control" id="TicketID" placeholder="Include &quot;INC&quot;"
                     name="TicketID" value="{{record.ticketINC}}">
             </div>
         </div>
