@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import path from "path";
 import DBConnect from "./config/db";
 import bootstrapDefaultLoaners from "./scripts/defaultLoanerCreation";
+import "dotenv/config"
 
 const app = express(); // Create the express server
 mongoose.set("debug", false);
@@ -28,24 +29,25 @@ connection.once("open", () => {
 
 bootstrapDefaultLoaners();
 
-// Serve CSS from /public
-console.log(path.join(__dirname, "../node_modules/bootstrap/dist/js"));
+// Serve static CSS and JS files/icons
 app.use(
   "/js",
   express.static(path.join(__dirname, "../node_modules/bootstrap/dist/js")),
-); // redirect bootstrap JS
+)
 app.use(
   "/js",
   express.static(path.join(__dirname, "../node_modules/jquery/dist")),
-); // redirect JS jQuery
+)
 app.use(
   "/css",
   express.static(path.join(__dirname, "../node_modules/bootstrap/dist/css")),
-); // redirect CSS bootstrap
+)
 app.use(
   "/icons",
   express.static(path.join(__dirname, "../node_modules/bootstrap-icons")),
 );
+
+// Serve static files
 app.use("/static", express.static(path.join(__dirname, "/static")));
 
 const handlebars = create({

@@ -1,5 +1,4 @@
 FROM node:16
-USER loaner
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -12,4 +11,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-CMD [ "node", "run", "start" ]
+CMD [ "npm", "run", "start" ]
