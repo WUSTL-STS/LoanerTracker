@@ -6,5 +6,10 @@ db.getSiblingDB('admin').auth(
 db.createUser({
     user: process.env.MONGO_USER,
     pwd: process.env.MONGO_PASSWORD,
-    roles: ["readWrite"],
+    roles: [
+        {
+            role: 'readWrite',
+            db: "loanertracker",
+        }
+    ],
 });

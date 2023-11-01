@@ -10,11 +10,7 @@ export default async function DBConnect(): Promise<void> {
       console.log(`MongoDB Connected: ${conn.connection.host}`);
     } else {
       console.log(`mongodb://${user}:${pass}@localhost:27017/loanertracker`)
-      const conn = await mongoose.connect("mongodb://localhost:27017/loanertracker",{
-        user: "stsadmin",
-        pass: "th3bl@ckWidow",
-        authSource: "admin",
-      });
+      const conn = await mongoose.connect(`mongodb://${user}:${pass}@localhost:27017/loanertracker`);
       console.log(`MongoDB Connected: ${conn.connection.host}`);
     }
   } catch (err) {
