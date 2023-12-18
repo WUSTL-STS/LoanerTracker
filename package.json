@@ -23,6 +23,7 @@
   "dependencies": {
     "@json2csv/plainjs": "^7.0.0",
     "@typegoose/typegoose": "^11.4.1",
+    "@types/node": "^20.8.9",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.10.5",
@@ -46,8 +47,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
-    "tsc": "^2.0.4",
-    "typescript": "^5.1.6",
+    "typescript": "^5.2.2",
     "typescript-cp": "^0.1.9"
   }
 }

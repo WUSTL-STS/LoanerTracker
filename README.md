@@ -36,3 +36,17 @@ Note: if you want to see console.logs from server-side, run `docker-compose up -
 ### Todo
 
 See issues tab.
+
+### ENV
+
+.env-server
+```
+MONGO_INITDB_ROOT_USERNAME=
+MONGO_INITDB_ROOT_PASSWORD=
+```
+
+.env
+```
+MONGO_USER=
+MONGO_PASSWORD=
+```
