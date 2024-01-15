@@ -9,8 +9,6 @@ services:
       dockerfile: Dockerfile
     environment:
       NODE_ENV: production
-    env_file:
-      - .env
     ports:
       - "8080:8080"
     container_name: loanertracker
@@ -20,13 +18,9 @@ services:
     image: mongo
     ports:
       - "27017:27017"
-    env_file:
-      - .env
-      - .env-server
     container_name: db
     volumes:
       - database:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     networks:
       - my-network
 
