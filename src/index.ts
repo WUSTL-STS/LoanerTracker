@@ -75,6 +75,7 @@ app.use("/", require("./routes/index"));
 app.use("/loaners", require("./routes/loaners"));
 app.use("/records", require("./routes/records"));
 app.use("/export", require("./routes/export"));
+app.use("/login", require("./routes/login"));
 
 const port = 8080;
 app.listen(port, () => {
