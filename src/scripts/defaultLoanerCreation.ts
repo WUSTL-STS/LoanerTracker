@@ -29,4 +29,13 @@ const createDefaultLoaners = async () => {
     await loaner.save();
     console.log("Created loaner: " + loaner.id);
   }
+  for (let i = 0; i < 15; i++) {
+    const loaner = new Loaner({
+      id: 2400 + i + 1,
+      isLoaned: false,
+      OS: "MACOS",
+    });
+    await loaner.save();
+    console.log("Created loaner: " + loaner.id);
+  }
 };
