@@ -4,7 +4,10 @@ import Record from "../models/Record";
 import Loaner from "../models/Loaner";
 const router = express.Router();
 
-router.get("/history", async (_, res) => {
+router.get("/history", async (req, res) => {
+  if (!req.session.loggedIn) {
+    return res.redirect('login')
+  }
   try {
     const records = await Record.find()
       .sort({ closeDate: "descending" })
@@ -15,7 +18,10 @@ router.get("/history", async (_, res) => {
   }
 });
 
-router.get("/create", async (_, res) => {
+router.get("/create", async (req, res) => {
+  if (!req.session.loggedIn) {
+    return res.redirect('login')
+  }
   try {
     const loaners = await Loaner.find({ isLoaned: false })
       .sort({ id: "asc" })

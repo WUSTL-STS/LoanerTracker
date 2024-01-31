@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import mongoose from "mongoose";
 import { create, engine } from "express-handlebars";
 import bodyParser from "body-parser";
@@ -19,6 +20,21 @@ app.use(
 
 // parse application/json
 app.use(bodyParser.json());
+
+declare module 'express-session' {
+  export interface SessionData {
+    loggedIn: boolean;
+  }
+}
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SESSION_SECRET ?? "secret",
+  cookie: {
+    maxAge: 60000 * 60 // Valid for an hour
+  },
+}))
 
 mongoose.set("strictQuery", false);
 DBConnect();
@@ -72,6 +88,7 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use("/", require("./routes/index"));
+app.use("/login", require("./routes/login"));
 app.use("/loaners", require("./routes/loaners"));
 app.use("/records", require("./routes/records"));
 app.use("/export", require("./routes/export"));
