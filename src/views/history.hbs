@@ -1,5 +1,12 @@
 <h1>All Laptop Loan Records</h1>
-<a class="btn btn-outline-primary" href="/">Return</a>
+<div class="container fluid">
+    <a class="btn btn-outline-primary" href="/">Return</a>
+    {{!-- Prompt confirm button, then forward post request on success --}}
+    <form action="/loaners/reset" method="post" style="margin-top: 10px;">
+        <button class="btn btn-outline-danger" type="submit">Recreate Loaners</button>
+    </form>
+</div>
+
 {{#if records}}
 <form id="csvblock" action="/export" method="post">
     Export records created in this time range to CSV (leaving blank exports every record):
