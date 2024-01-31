@@ -3,7 +3,10 @@ import express from "express";
 import Record from "../models/Record";
 const router = express.Router();
 
-router.get("/", async (_, res) => {
+router.get("/", async (req, res) => {
+  if (!req.session.loggedIn) {
+    return res.redirect('login')
+  }
   try {
     const records = await Record.find({ isOpen: "true" })
       .sort({ nextContactDate: "ascending" })
